@@ -1,0 +1,24 @@
+### Node ###
+
+# Node environment
+package-lock.json
+
+*.zip
+*.rdb
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional npm cache directory
+.npm
+
+# Dependency directories
+/node_modules
+/jspm_packages
+/bower_components
+
+/uploads/*
+*.sqlite
