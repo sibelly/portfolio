@@ -1,28 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import api from './services/api';
 
 import './App.css'
-import backgroundImage from './assets/background.jpeg'
+// import backgroundImage from './assets/background.jpeg'
 
 import Header from './components/Header'
 
 function App() {
-  const [projects, setProjects] = useState(['Dev Portfolio', 'Chave Cmb'])
+  const [repositories, setRepositories] = useState([])
 
-  function handleAddProject() {
-    setProjects([...projects, `Novo projeto ${Date.now()}`])
+  async function handleAddRepository() {
+    // setProjects([...projects, `Novo projeto ${Date.now()}`])
+    const response = await api.post('repositories', {
+      title: `Novo repo ${Date.now()}`,
+      url: 'teste.com',
+      techs: 'react',
+      likes: 0
+    })
+
+    const repo = response.data
+    console.log('%%%%%%% response.data => ', response.data)
+    setRepositories([...repositories, repo])
   }
+
+
+  useEffect(() => {
+		api.get('repositories').then(response => {
+      console.log('&&&&&&&& useEffect => ', response)
+      setRepositories(response.data)
+    });
+	}, []);
 
   return (
     <>
-      <Header title="Projects"/>
+      <Header title="Repositories"/>
 
-      <img width={300} src={backgroundImage} alt="Background"/>
+      {/* <img width={300} src={backgroundImage} alt="Background"/> */}
 
       <ul>
-        { projects.map(project => <li key={project}> { project } </li>)}
+        { repositories.map(repo => <li key={repo.id}> { repo.title } </li>)}
       </ul>
 
-      <button type="button" onClick={handleAddProject}>Adicionar projeto</button>
+      <button type="button" onClick={handleAddRepository}>Adicionar repositório</button>
     </>
   )
 }
