@@ -24,6 +24,7 @@ app.post("/repositories", (request, response) => {
     techs,
     likes: 0
   }
+  console.log('asdasdadasdasdas', repository)
   repositories.push(repository)
   return response.json(repository)
 });
